@@ -18,6 +18,7 @@ extern const void *const kLatestSenderKey;
 @implementation UIApplication (MemoryLeak)
 
 + (void)load {
+    [[DoraemonCacheManager sharedInstance] saveMemoryLeak:true];
     if ([[DoraemonCacheManager sharedInstance]  memoryLeak]){
         static dispatch_once_t onceToken;
         dispatch_once(&onceToken, ^{
