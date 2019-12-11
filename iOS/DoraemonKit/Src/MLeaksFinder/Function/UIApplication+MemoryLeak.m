@@ -18,7 +18,10 @@ extern const void *const kLatestSenderKey;
 @implementation UIApplication (MemoryLeak)
 
 + (void)load {
-    [[DoraemonCacheManager sharedInstance] saveMemoryLeak:true];
+    NSUserDefaults * defaults = [NSUserDefaults standardUserDefaults];
+    if ([defaults objectForKey:@"doraemon_memory_leak_key"] == nil) {
+        [[DoraemonCacheManager sharedInstance] saveMemoryLeak:true];
+    }
     if ([[DoraemonCacheManager sharedInstance]  memoryLeak]){
         static dispatch_once_t onceToken;
         dispatch_once(&onceToken, ^{
